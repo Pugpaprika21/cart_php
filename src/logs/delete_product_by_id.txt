@@ -1,0 +1,1 @@
+[2024-06-23 10:03:09] DELETE http://localhost:8000//?route=/api/categories/deleteCategorie&categoryId=6 delete categories id: 6

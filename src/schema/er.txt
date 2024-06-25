@@ -1,0 +1,93 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Enum "order_status" {
+  "pending"
+  "completed"
+  "canceled"
+}
+
+Table "users" {
+  "id" SERIAL [pk, increment]
+  "created_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "updated_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "deleted_at" TIMESTAMPTZ
+  "username" VARCHAR(50) [unique, not null]
+  "email" VARCHAR(100) [unique, not null]
+  "password_hash" VARCHAR(255) [not null]
+  "first_name" VARCHAR(100)
+  "last_name" VARCHAR(100)
+  "date_of_birth" DATE
+  "address" TEXT
+  "phone_number" VARCHAR(20)
+}
+
+Table "products" {
+  "id" SERIAL [pk, increment]
+  "created_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "updated_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "deleted_at" TIMESTAMPTZ
+  "name" VARCHAR(100) [not null]
+  "description" TEXT
+  "price" DECIMAL(10,2) [not null, default: 0.00]
+  "quantity" INT [not null]
+  "category_id" INT [not null]
+}
+
+Table "orders" {
+  "id" SERIAL [pk, increment]
+  "created_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "updated_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "deleted_at" TIMESTAMPTZ
+  "user_id" INT [not null]
+  "product_id" INT [not null]
+  "quantity" INT [not null]
+  "price" DECIMAL(10,2) [not null]
+  "status" order_status [not null]
+}
+
+Table "order_items" {
+  "id" SERIAL [pk, increment]
+  "created_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "updated_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "deleted_at" TIMESTAMPTZ
+  "user_id" INT [not null]
+  "order_id" INT [not null]
+  "product_id" INT [not null]
+  "total_amount" DECIMAL(10,2) [not null, default: 0.00]
+}
+
+Table "categories" {
+  "id" SERIAL [pk, increment]
+  "created_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "updated_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "deleted_at" TIMESTAMPTZ
+  "name" VARCHAR(255) [not null]
+  "description" TEXT
+}
+
+Table "attachments" {
+  "id" SERIAL [pk, increment]
+  "created_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "updated_at" TIMESTAMPTZ [default: `CURRENT_TIMESTAMP`]
+  "deleted_at" TIMESTAMPTZ
+  "filename" VARCHAR(255) [not null]
+  "path" TEXT [not null]
+  "size" BIGINT [not null]
+  "mime_type" VARCHAR(100) [not null]
+  "extension" VARCHAR(10) [not null]
+  "ref_id" INT [not null]
+  "ref_table" VARCHAR(100) [not null]
+}
+
+Ref:"categories"."id" < "products"."category_id"
+
+Ref:"users"."id" < "orders"."user_id"
+
+Ref:"products"."id" < "orders"."product_id"
+
+Ref:"users"."id" < "order_items"."user_id"
+
+Ref:"orders"."id" < "order_items"."order_id"
+
+Ref:"products"."id" < "order_items"."product_id"

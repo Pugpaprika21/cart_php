@@ -1,0 +1,2 @@
+[2024-06-23 03:46:01] POST http://localhost:8000//?route=/api/product/saveProduct save products: new product id : 2
+[2024-06-23 03:47:39] POST http://localhost:8000//?route=/api/product/saveProduct save products: new product id : 3

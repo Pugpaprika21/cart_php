@@ -1,0 +1,4 @@
+[2024-06-23 09:45:48] GET http://localhost:8000//?route=/api/categories/getCategorie&categoryId=6 get categories ..
+[2024-06-23 09:48:04] GET http://localhost:8000//?route=/api/categories/getCategorie&categoryId=6 get categories ..
+[2024-06-23 09:49:34] GET http://localhost:8000//?route=/api/categories/getCategorie&categoryId=6 get categories ..
+[2024-06-23 09:57:34] PUT http://localhost:8000//?route=/api/categories/updateCategorie&categoryId=6 update categories id: 6
